@@ -1,0 +1,9 @@
+<div class="card border-primary mb-3" style="width: 18rem;" *ngIf="loaded">
+    <div class="card-header">
+        <div class="card-title">{{ product.name }}</div>
+    </div>
+    <div class="card-body">
+        <h6 class="card-subtitle mb-2 text-muted">{{ product.category.name }}</h6>
+        <p class="card-text">Id: {{ product.id }}</p>
+    </div>
+</div>

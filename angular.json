@@ -119,6 +119,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "SuperMarketClnt"
+    }
+  },
+  "defaultProject": "SuperMarketClnt",
+  "cli": {
+    "analytics": "08b0d8ce-c619-4ea4-8185-3127a032eb59"
+  }
 }

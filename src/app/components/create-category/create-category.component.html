@@ -1,0 +1,44 @@
+<h1>Create a category</h1>
+<hr>
+
+
+<form autocomplete="off" [formGroup]="forma" (ngSubmit)="submit()">
+    <div class="mt-5">
+        <div class="form-group row">
+            <label class="col-2 col-form-label">Name</label>
+            <div class="col-8">
+              <input class="form-control"
+                     type="text"
+                     placeholder="Enter a category description"
+                     formControlName="name"
+                     [class.is-invalid]="nameInvalid">
+              <small class="text-danger"
+                       *ngIf="nameInvalid">At least 3 characters are required (first character must be uppercase)
+              </small>
+            </div>
+          </div>
+    </div>
+
+
+    <div class="form-group row">
+      <label class="col-2 col-form-label">&nbsp;</label>
+      <div class="input-group col-md-8">
+        <button type="submit" class="btn btn-outline-primary">
+          Create
+        </button>
+      </div>
+    </div>
+</form>
+
+
+<hr>
+
+<pre>
+  Estado del formulario: {{ forma.valid }}
+  <br>
+  Status: {{ forma.status }}
+</pre>
+
+<pre>
+  {{ forma.value | json}}
+</pre>

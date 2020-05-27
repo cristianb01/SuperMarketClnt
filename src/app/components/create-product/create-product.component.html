@@ -1,0 +1,73 @@
+<h1>Create a product</h1>
+<hr>
+
+
+<form autocomplete="off" [formGroup]="forma" (ngSubmit)="submit()">
+    <div class="mt-5">
+        <div class="form-group row">
+            <label class="col-2 col-form-label">Name</label>
+            <div class="col-8">
+              <input class="form-control"
+                     type="text"
+                     placeholder="Enter a product description"
+                     formControlName="name"
+                     [class.is-invalid]="nameInvalid">
+              <small class="text-danger"
+                       *ngIf="nameInvalid">At least 3 characters are required
+              </small>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-2 col-form-label">Quantity</label>
+            <div class="col-8">
+              <input class="form-control"
+                     type="number"
+                     placeholder="Quantity in package"
+                     formControlName="quantity"
+                     [class.is-invalid]="quantityInvalid">
+              <small class="text-danger"
+                       *ngIf="quantityInvalid">Enter quantity
+              </small>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-2 col-form-label ">Category</label>
+            <div class="col-8">
+              <select class="form-control"
+                      formControlName="category"
+                      [class.is-invalid]="categoryInvalid">
+                <option selected value="default">Choose</option>
+                <option *ngFor="let category of categories" value="{{category.id}}">{{category.name}}</option>
+              </select>
+              <small class="text-danger"
+                       *ngIf="categoryInvalid">Select category
+              </small>
+          </div>
+          </div>
+
+    </div>
+
+    <div class="form-group row">
+      <label class="col-2 col-form-label">&nbsp;</label>
+      <div class="input-group col-md-8">
+        <button type="submit" class="btn btn-outline-primary">
+          Save product
+        </button>
+      </div>
+    </div>
+</form>
+
+
+<hr>
+
+<pre>
+  Estado del formulario: {{ forma.valid }}
+  <br>
+  Status: {{ forma.status }}
+</pre>
+
+<pre>
+  {{ forma.value | json}}
+</pre>
