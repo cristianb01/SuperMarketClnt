@@ -42,7 +42,7 @@ export class CreateCategoryComponent implements OnInit {
       Swal.fire({
         allowOutsideClick: true,
         icon: 'success',
-        text: `Created category ${resp['name']} with id:${resp['id']}`
+        text: `Created category ${resp['name']}\n with id:${resp['id']}`
       });
     }, e => {
       console.log(e);

@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { MarketService } from '../../services/market.service';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { Category } from '../../models/category';
-import { Product } from '../../models/product';
 import { ProductPostResource } from '../../models/resources/productPost-resource';
 
 import Swal from 'sweetalert2';
@@ -23,15 +22,11 @@ export class CreateProductComponent implements OnInit {
                { 
                  this.initForm();
                  this.loadDataForm();
-                 this.testReceive();
                }
 
   ngOnInit(): void {
   }
 
-  testReceive() {
-    this.marketService.getCategories().subscribe( (resp: Category[]) => console.log(resp));
-  }
 
   initForm() {
     this.forma = this.formBuilder.group({
@@ -48,7 +43,6 @@ export class CreateProductComponent implements OnInit {
   }
 
   submit() {
-    console.log(this.forma);
 
     if(this.forma.invalid) {
       return Object.values(this.forma.controls).forEach( control => control.markAsTouched() );
@@ -64,22 +58,24 @@ export class CreateProductComponent implements OnInit {
       categoryId: Number (this.forma.get('category').value)
     }
 
-    console.log(productResource);
 
-    this.marketService.postProduct(productResource).subscribe( 
-      null, //Se puede crear un Swal mostrando info
-      resp => {
-        console.log(resp);
-        let error = resp.error;
-        Object.keys(error.errors).forEach(key => {
+    this.marketService.postProduct(productResource).subscribe( resp => {
+      Swal.fire({
+        allowOutsideClick: true,
+        icon: 'success',
+        text: `Created category ${resp['name']} with id: ${resp['id']}`
+      });
+    },
+      err => {
+        console.log(err);
+        let error = err.error;
           Swal.fire({
             allowOutsideClick: true,
-            icon: 'warning',
-            text: error.errors[key][0]
+            icon: 'error',
+            text: error
           });
-        })
       }
-      );
+    )
   }
 
 
