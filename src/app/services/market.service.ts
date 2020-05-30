@@ -37,6 +37,11 @@ export class MarketService {
     return this.httpClient.post(URI, product);
   }
 
+  deleteProduct(id: number) {
+    const URI = this.url + `/products/${id}`;
+    return this.httpClient.delete(URI);
+  }
+
 
   //Categories requests
   getCategories() {

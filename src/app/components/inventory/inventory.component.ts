@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
 import { MarketService } from '../../services/market.service';
 import { Product } from 'src/app/models/product';
-import { Category } from '../../models/category';
+import { Router } from "@angular/router";
+import Swal from 'sweetalert2';
+
 
 @Component({
   selector: 'app-inventory',
@@ -12,8 +14,13 @@ import { Category } from '../../models/category';
 export class InventoryComponent implements OnInit {
   
   forma: FormGroup;
+
+  loaded: boolean;
   constructor( private formBuilder: FormBuilder,
-               private marketService: MarketService ) {
+               private marketService: MarketService,
+               private router: Router) {
+    
+    this.loaded = false;
     this.initForm();
     this.loadDataForm();
    }
@@ -31,16 +38,16 @@ export class InventoryComponent implements OnInit {
           quantity: product.quantityInPackage,
           category: product.category.name
         });
-        console.log(form);
         this.products.push(form);
       });//foreach
+      this.loaded = true;
     });//subscribe
   }
 
   
   initForm() {
     this.forma = this.formBuilder.group({
-      products: this.formBuilder.array([this.productFormGroup()])
+      products: this.formBuilder.array([])
     });
   }
   
@@ -53,6 +60,32 @@ export class InventoryComponent implements OnInit {
     });
   }
 
+
+  deleteProduct(id: number, index: number) {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Delete'
+    }).then((result) => {
+      if (result.value) {
+
+        this.marketService.deleteProduct(id).subscribe(resp => {
+          this.products.removeAt(index);
+        }, err => {
+          //Do for error
+        });
+      }
+    });
+  }
+
+
+  add(){
+    this.router.navigate(['/createProduct']);
+  }
 
   //Getters
   get products() {
